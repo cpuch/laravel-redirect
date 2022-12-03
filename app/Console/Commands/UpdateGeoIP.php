@@ -33,6 +33,12 @@ class UpdateGeoIP extends Command
             'editions' => array('GeoLite2-Country'),
         );
 
+        // Create destination dir.
+        $destination = base_path() . DIRECTORY_SEPARATOR . $geoip['dir'];
+        if (!file_exists($destination)) {
+            mkdir($destination);
+        }
+
         // Force update.
         if ($this->option('force')) {
 

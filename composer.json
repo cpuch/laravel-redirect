@@ -9,6 +9,7 @@
         "geoip2/geoip2": "^2.13",
         "guzzlehttp/guzzle": "^7.2",
         "jenssegers/agent": "^2.6",
+        "laravel/breeze": "^1.15",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",

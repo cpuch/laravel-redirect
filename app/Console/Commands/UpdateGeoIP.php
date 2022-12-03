@@ -30,19 +30,18 @@ class UpdateGeoIP extends Command
         $geoip = array(
             'license_key' => env('MAXMIND_LICENSE_KEY'),
             'dir' => env('DESTINATION_DIRECTORY_PATH'),
-            'editions' => explode(' ', env('MAXMIND_DATABASES')),
+            'editions' => array('GeoLite2-Country'),
         );
 
-        // Force databases update.
+        // Force update.
         if ($this->option('force')) {
 
-            // Delete last-modified.txt file to force the edition database update.
-            foreach ($geoip['editions'] as $edition) {
-                $modified = $geoip['dir'] . DIRECTORY_SEPARATOR . $edition . DIRECTORY_SEPARATOR . 'last-modified.txt';
-                if (is_file($modified)) {
-                    unlink($modified);
-                }
+            // Delete file last-modified.txt.
+            $modified = $geoip['dir'] . DIRECTORY_SEPARATOR . 'GeoLite2-Country' . DIRECTORY_SEPARATOR . 'last-modified.txt';
+            if (is_file($modified)) {
+                unlink($modified);
             }
+
         }
 
         // Run update.
@@ -60,7 +59,5 @@ class UpdateGeoIP extends Command
                 $this->error($error);
             }
         }
-
-        return Command::SUCCESS;
     }
 }

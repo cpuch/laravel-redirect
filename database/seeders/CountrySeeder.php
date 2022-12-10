@@ -23,7 +23,7 @@ class CountrySeeder extends Seeder
 
         // Seed the table.
         foreach ($data as $country) {
-            Country::create([
+            Country::updateOrCreate([
                 'code' => $country->Code,
                 'name' => $country->Name,
             ]);

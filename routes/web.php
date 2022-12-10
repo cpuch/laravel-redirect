@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LinkController;
+use App\Http\Controllers\RedirectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // return redirect()->route('link.index');
     return view('welcome');
 });
 
@@ -29,3 +32,14 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::prefix('link')->middleware(['auth', 'verified'])->group(function() {
+    Route::get('/', [LinkController::class, 'index'])->name('link.index');
+    Route::get('/create', [LinkController::class, 'create'])->name('link.create');
+    Route::post('/create', [LinkController::class, 'store'])->name('link.store');
+    Route::get('/edit/{link}', [LinkController::class, 'edit'])->name('link.edit');
+    Route::put('/edit/{link}', [LinkController::class, 'update'])->name('link.update');
+    Route::delete('/delete/{link}', [LinkController::class, 'destroy'])->name('link.destroy');
+});
+
+Route::get('/{code}', [RedirectController::class, 'redirect'])->name('link.redirect');
